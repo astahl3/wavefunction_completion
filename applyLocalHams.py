@@ -1,0 +1,67 @@
+import numpy as np
+
+def applyLocalHams(psi: np.ndarray, hloc: list[np.ndarray], N: int, 
+                   usePBC: bool, d: int, n: int) -> np.ndarray:
+    '''
+    Applies local Hamiltonian operators (given as a set of local terms, 'hloc') 
+    to input quantum state 'psi'
+
+    Parameters:
+             
+    psi      = input quantum state
+    hloc     = 1D array of local Hamiltonians; cell{1} corresponds to a local 
+               Hamiltonian operator that couples the first lattice site to the
+               next (n-1) sites
+    N        = total nubmer of lattice sites
+    usePBC   = set to True for periodic boundary conditions, False for open
+               boundary conditions
+    d        = local dimension for each lattice site (e.g., d = 2 for a qubit)
+    n        = number of sites spanned by local Hamiltonian terms (i.e., the 
+               interaction or coupling length)
+    
+    Returns:
+    
+    psi_sum  = state vector after applying all local Hamiltonian terms
+    
+    '''  
+    psi_sum = np.zeros(d**N)
+    
+    # For readability and educational purposes, each line contains only one
+    # command. However, lines can be combined if desired for compactness, e.g.:
+    # psi_temp = np.reshape(np.transpose(np.reshape(...), ...), ...)
+    
+    # Apply local Hamiltonian terms to non-boundary lattice sites
+    for i in range(1, (N - n)):
+        h = np.reshape(hloc[i-1], (d**n), (d**n))
+        d1 = i - 1
+        d2 = n
+        d3 = N - d1 - d2
+        
+        psi_temp = np.reshape(psi, (d**d1, d**d2, d**d3))
+        psi_temp = np.transpose(psi, (1,0,2))
+        psi_temp = np.reshape(psi_temp, (d**n, d**(N - n)))
+        psi_temp = np.dot(h, psi_temp)
+        psi_temp = np.reshape(psi_temp, (d**d2, d**d1, d**d3))
+        psi_temp = np.transpose(psi_temp, (1,0,2))
+        psi_temp = np.reshape(psi_temp, (d**N,1))
+        psi_sum += psi_temp
+        
+    # If using periodic boundary conditions, apply local Hamiltonian terms to
+    # the boundary lattice sites
+    if usePBC:
+        
+        # Rotate last k sites to front of lattice, then reshape and apply term
+        k = 1
+        for j in range(N - (n - 1), N):
+            h = np.reshape(hloc[j], (d**n, d**n))
+            psi_temp = np.reshape(psi, (d**k, d**(N - n), d**(n - k)))
+            psi_temp = np.transpose(psi_temp, (2,0,1))
+            psi_temp = np.reshape(psi_temp, (d**n, d**(N - n)))
+            psi_temp = np.dot(h, psi_temp)
+            psi_temp = np.reshape(psi_temp, (d**(n - k), d**k, d**(N - n)))
+            psi_temp = np.transpose(psi_temp, (1,2,0))
+            psi_temp = np.reshape(psi_temp, (d**N, 1))
+            psi_sum += psi_temp
+            k = k + 1
+            
+    return psi_sum
