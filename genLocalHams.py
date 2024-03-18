@@ -12,8 +12,7 @@ def genLocalHams(ham_type: str, N: int, usePBC: bool=True, d: int=2,
         
         arXiv link: https://arxiv.org/pdf/quant-ph/0304098.pdf
 
-    Parameters:
-    
+    PARAMETERS:
     ham_type = specifies which Hamiltonian is desired (see options below)
     N        = total number of lattice sites
     usePBC   = set to True for periodic boundary conditions, False for open
@@ -25,25 +24,29 @@ def genLocalHams(ham_type: str, N: int, usePBC: bool=True, d: int=2,
                model is selected
     gam      = spin coupling parameter gamma; only used if the "XY" model is 
                selected
+    RETURNS:
+    hloc     = list of the local Hamiltonian terms, where the kth entry in hloc
+               corresponds to the operator for sites k to (k+n) 
+
 
     Acceptable strings for the variable ham_type:    
     
-        rand-inhomog-r: random, real, translationally variant local terms
-        rand-inhomog-c: random, complex, translationally variant local terms
-        rand-homog-r:   random, real, translationally invariant local terms
-        rand-homog-c:   random, real, translationally invariant local terms
-        XY:             XY spin chain model in 1-D (see reference above)
+    rand-inhomog-r: random, real, translationally variant local terms
+    rand-inhomog-c: random, complex, translationally variant local terms
+    rand-homog-r:   random, real, translationally invariant local terms
+    rand-homog-c:   random, real, translationally invariant local terms
+    XY:             XY spin chain model in 1-D (see reference above)
            
         
-           *************************************************
-           *       COMMON XY MODEL CONFIGURATIONS          *
-           *                                               *
-           *   critical XY:      gam >= 0,   lam = 1       *
-           *   XX:               gam = 0,    lam >= 0      *
-           *   critical XX:      gam = 0,    0 <= lam <= 1 *
-           *   Ising:            gam = 1,    lam >= 0      *
-           *   critical Ising:   gam = 1,    lam = 1       *
-           *************************************************
+    *************************************************
+    *       COMMON XY MODEL CONFIGURATIONS          *
+    *                                               *
+    *   critical XY:      gam >= 0,   lam = 1       *
+    *   XX:               gam = 0,    lam >= 0      *
+    *   critical XX:      gam = 0,    0 <= lam <= 1 *
+    *   Ising:            gam = 1,    lam >= 0      *
+    *   critical Ising:   gam = 1,    lam = 1       *
+    *************************************************
     
     """
     
