@@ -16,7 +16,7 @@ from genLocalHams import genLocalHams
 from applyHam import applyHam
 
 # Simulation parameters
-model = 'XX-G' # see genLocalHams.py for options
+model = 'rand-homog-c' # see genLocalHams.py for options
 Nsites = 16 # number of lattice sites
 usePBC = True # use periodic or open boundaries
 d = 2 # local dimension
