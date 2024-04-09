@@ -1,5 +1,8 @@
 Wavefunction Completion with Tensor Networks
-Author: Aaron Stahl (2024)
+Author: Aaron Stahl (2024) // aaaron.m.stahl@gmail.com
+Author's note: a more comprehensive repository is 
+available in Matlab; please email if interested.
+
 
 OVERVIEW
 ----------------
@@ -59,8 +62,8 @@ Core functionality included in:
 
 Sample implementations:
 - exactDiagEx.py (exact diagonalization)
-- wavefunctionCompEx.py (sample completion: MPS and ACS)
-- wavefunctionTreeCompEx.py (sample completion: tree tensor network)
+- wavefunctionCompEx.py (example: MPS and ACS)
+- wavefunctionTreeCompEx.py (example: tree tensor network)
 
 ACKNOWLEDGMENTS
 --------------------------------
