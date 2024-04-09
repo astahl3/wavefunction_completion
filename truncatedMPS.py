@@ -14,6 +14,7 @@ def truncatedMPS(psi_in: np.ndarray, error_locs: np.ndarray, chi_max: int,
     entries of the original "psi_in" are unchanged
     
     PARAMETERS:
+    -----------
     psi_in         = wavefunction to be approximated via MPS 
     error_locs     = locations of unsampled (or unknown) wavefunction entires
     chi_max        = max bond dimension
@@ -21,6 +22,7 @@ def truncatedMPS(psi_in: np.ndarray, error_locs: np.ndarray, chi_max: int,
     d              = local dimension of model
     
     RETURNS:
+    --------
     psi_in         = original wavefunction with updated entries
     
     '''
@@ -63,6 +65,6 @@ def truncatedMPS(psi_in: np.ndarray, error_locs: np.ndarray, chi_max: int,
     # Rebuild eigenstate via ncon
     psi_mps = ncon(U, index_array)
     psi_mps = np.reshape(psi_mps, (d**Nsites, 1))
-    psi_in[error_locs] = psi_mps[error_locs]
+    psi_in.flat[error_locs] = psi_mps.flat[error_locs]
 
     return psi_in
